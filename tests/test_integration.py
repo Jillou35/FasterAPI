@@ -1,6 +1,6 @@
 from tests.conftest import TEST_DATABASE_URL
-from fasterapi.auth.jwt import decode_access_token
-from fasterapi.auth.routes import create_auth_router
+from realfastapi.auth.jwt import decode_access_token
+from realfastapi.auth.routes import create_auth_router
 import pytest
 from contextlib import asynccontextmanager
 from typing import Optional
@@ -10,9 +10,9 @@ from fastapi import Depends
 from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String
 
-from fasterapi.core import FasterAPI, FasterAPIConfig, DatabaseConfig, AuthConfig
-from fasterapi.crud import BaseCRUD, create_crud_router
-from fasterapi.database import Base
+from realfastapi.core import RealFastAPI, RealFastAPIConfig, DatabaseConfig, AuthConfig
+from realfastapi.crud import BaseCRUD, create_crud_router
+from realfastapi.database import Base
 
 
 # --- Models & Schemas ---
@@ -75,20 +75,20 @@ crud_protected = BaseCRUD(
 async def app_instance():
     # Define lifespan to create tables
     @asynccontextmanager
-    async def lifespan(app: FasterAPI):
+    async def lifespan(app: RealFastAPI):
         if app.db:
             async with app.db.engine.begin() as conn:
                 await conn.run_sync(Base.metadata.create_all)
         yield
-        # Cleanup is handled by FasterAPI default lifespan + engine dispose
+        # Cleanup is handled by RealFastAPI default lifespan + engine dispose
 
     db_config = DatabaseConfig(url=TEST_DATABASE_URL)
     auth_config = AuthConfig(secret_key="TEST_KEY", token_url="/login")
-    config = FasterAPIConfig(
+    config = RealFastAPIConfig(
         title="Integration Test App", db_config=db_config, auth_config=auth_config
     )
-    # Pass our lifespan. FasterAPI core wrapper handles calling it.
-    app = FasterAPI(config, lifespan=lifespan)
+    # Pass our lifespan. RealFastAPI core wrapper handles calling it.
+    app = RealFastAPI(config, lifespan=lifespan)
 
     create_crud_router(
         crud=crud_item, path="/items", app=app, password_field="password"
@@ -119,7 +119,7 @@ async def app_instance():
 
 
 @pytest.mark.asyncio
-async def test_integration_flow(app_instance: FasterAPI):
+async def test_integration_flow(app_instance: RealFastAPI):
     # Pass transport to AsyncClient with app to handle requests against the in-memory app
     async with AsyncClient(
         transport=ASGITransport(app=app_instance), base_url="http://test"

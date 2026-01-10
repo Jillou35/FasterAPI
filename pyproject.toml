@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "fasterapi"
-version = "0.1.1"
+name = "realfastapi"
+version = "0.1.0"
 description = "A production-ready wrapper application framework for FastAPI"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -38,9 +38,9 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/Jillou35/FasterAPI"
-Repository = "https://github.com/Jillou35/FasterAPI"
-Issues = "https://github.com/Jillou35/FasterAPI/issues"
+Homepage = "https://github.com/Jillou35/RealFastAPI"
+Repository = "https://github.com/Jillou35/RealFastAPI"
+Issues = "https://github.com/Jillou35/RealFastAPI/issues"
 
 [project.optional-dependencies]
 dev = [
@@ -54,7 +54,7 @@ dev = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["fasterapi"]
+packages = ["realfastapi"]
 
 [tool.black]
 line-length = 88

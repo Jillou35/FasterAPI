@@ -5,9 +5,9 @@ from sqlalchemy import ForeignKey
 from pydantic import BaseModel
 from fastapi import FastAPI, Depends
 
-from fasterapi.core import FasterAPI, FasterAPIConfig, DatabaseConfig
-from fasterapi.crud.base import BaseCRUD
-from fasterapi.database.base import Base
+from realfastapi.core import RealFastAPI, RealFastAPIConfig, DatabaseConfig
+from realfastapi.crud.base import BaseCRUD
+from realfastapi.database.base import Base
 
 
 # --- Models ---
@@ -52,7 +52,7 @@ class ChildCreate(BaseModel):
 async def test_relationship_loading(db_instance, db_session):
     # Setup App (minimal)
     db_config = DatabaseConfig(url="sqlite+aiosqlite:///:memory:")
-    config = FasterAPIConfig(db_config=db_config)
+    config = RealFastAPIConfig(db_config=db_config)
 
     # We use the fixture's engine/session for setup, but the app creates its own.
     # To test BaseCRUD logic directly, we can use the fixture session.

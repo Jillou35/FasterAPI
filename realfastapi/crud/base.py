@@ -64,7 +64,7 @@ class BaseCRUD:
         """
         Get multiple records with pagination, sorting, and filtering.
         """
-        from fasterapi.crud.filters import parse_filters, parse_sort
+        from realfastapi.crud.filters import parse_filters, parse_sort
 
         query = select(self.model)
 

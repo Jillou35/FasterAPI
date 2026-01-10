@@ -7,9 +7,9 @@ from fastapi.security import OAuth2PasswordBearer
 from pydantic_settings import BaseSettings
 from pydantic import ValidationError
 
-from fasterapi.database.session import Database
-from fasterapi.auth.jwt import decode_access_token
-from fasterapi.schemas.token import TokenPayload
+from realfastapi.database.session import Database
+from realfastapi.auth.jwt import decode_access_token
+from realfastapi.schemas.token import TokenPayload
 
 
 class DatabaseConfig(BaseSettings):
@@ -22,14 +22,14 @@ class AuthConfig(BaseSettings):
     algorithm: str = "HS256"
 
 
-class FasterAPIConfig(BaseSettings):
-    title: str = "FasterAPI App"
+class RealFastAPIConfig(BaseSettings):
+    title: str = "RealFastAPI App"
     db_config: Optional[DatabaseConfig] = None
     auth_config: Optional[AuthConfig] = None
 
 
-class FasterAPI(FastAPI):
-    def __init__(self, config: FasterAPIConfig, **kwargs: Any):
+class RealFastAPI(FastAPI):
+    def __init__(self, config: RealFastAPIConfig, **kwargs: Any):
         user_lifespan = kwargs.pop("lifespan", None)
 
         @asynccontextmanager

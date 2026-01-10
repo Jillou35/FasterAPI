@@ -3,9 +3,9 @@ from typing import List, Optional
 from sqlalchemy.orm import Mapped, mapped_column
 from pydantic import BaseModel
 
-from fasterapi.core import FasterAPIConfig, DatabaseConfig
-from fasterapi.crud.filters import parse_filters
-from fasterapi.database.base import Base
+from realfastapi.core import RealFastAPIConfig, DatabaseConfig
+from realfastapi.crud.filters import parse_filters
+from realfastapi.database.base import Base
 from sqlalchemy import select, and_, inspect
 
 
@@ -60,7 +60,7 @@ async def test_filters_integration(db_instance, db_session):
     async with db_instance.engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-    from fasterapi.crud.base import BaseCRUD
+    from realfastapi.crud.base import BaseCRUD
 
     class ItemCreate(BaseModel):
         name: str

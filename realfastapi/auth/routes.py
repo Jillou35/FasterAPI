@@ -1,25 +1,25 @@
 from typing import Any
 from enum import Enum
-from fasterapi.database.session import Database
+from realfastapi.database.session import Database
 from typing import Sequence
 from typing import List
 from typing import Optional
-from fasterapi.core import FasterAPI
+from realfastapi.core import RealFastAPI
 from typing import Dict
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from fasterapi.auth.jwt import create_access_token
-from fasterapi.auth.security import verify_password
-from fasterapi.crud.base import BaseCRUD, ModelType
-from fasterapi.schemas.token import Token
+from realfastapi.auth.jwt import create_access_token
+from realfastapi.auth.security import verify_password
+from realfastapi.crud.base import BaseCRUD, ModelType
+from realfastapi.schemas.token import Token
 
 
 def create_auth_router(
     crud: BaseCRUD,
-    app: FasterAPI,
+    app: RealFastAPI,
     secret_key: str,
     username_field: str = "email",  # default field to check for username
     password_field: str = "hashed_password",  # default field to check for hashed password,

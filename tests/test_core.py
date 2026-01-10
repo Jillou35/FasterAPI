@@ -4,18 +4,18 @@ from unittest.mock import AsyncMock, MagicMock, patch
 from contextlib import asynccontextmanager
 from fastapi import Request
 
-from fasterapi.core import FasterAPI, FasterAPIConfig, DatabaseConfig
+from realfastapi.core import RealFastAPI, RealFastAPIConfig, DatabaseConfig
 
 
 def test_config_defaults():
-    config = FasterAPIConfig()
-    assert config.title == "FasterAPI App"
+    config = RealFastAPIConfig()
+    assert config.title == "RealFastAPI App"
     assert config.db_config is None
 
 
 def test_init_without_db():
-    config = FasterAPIConfig(title="My App")
-    app = FasterAPI(config)
+    config = RealFastAPIConfig(title="My App")
+    app = RealFastAPI(config)
 
     assert app.title == "My App"
     assert app.db is None
@@ -23,8 +23,8 @@ def test_init_without_db():
 
 def test_init_with_db():
     db_config = DatabaseConfig(url=TEST_DATABASE_URL)
-    config = FasterAPIConfig(db_config=db_config)
-    app = FasterAPI(config)
+    config = RealFastAPIConfig(db_config=db_config)
+    app = RealFastAPI(config)
 
     assert app.db is not None
     assert app.db.engine is not None  # Basic check that Database was init
@@ -33,13 +33,13 @@ def test_init_with_db():
 @pytest.mark.asyncio
 async def test_lifespan_closes_db():
     # Mock Database to verify close is called
-    with patch("fasterapi.core.Database") as MockDatabase:
+    with patch("realfastapi.core.Database") as MockDatabase:
         mock_db_instance = AsyncMock()
         MockDatabase.return_value = mock_db_instance
 
         db_config = DatabaseConfig(url="sqlite:///:memory:")
-        config = FasterAPIConfig(db_config=db_config)
-        app = FasterAPI(config)
+        config = RealFastAPIConfig(db_config=db_config)
+        app = RealFastAPI(config)
 
         # Manually trigger lifespan
         # app.router.lifespan_context is the wrapper around the lifespan function
@@ -58,8 +58,8 @@ async def test_lifespan_calls_user_lifespan():
         await mock_lifespan(app)
         yield
 
-    config = FasterAPIConfig()
-    app = FasterAPI(config, lifespan=user_lifespan)
+    config = RealFastAPIConfig()
+    app = RealFastAPI(config, lifespan=user_lifespan)
 
     async with app.router.lifespan_context(app):
         pass
@@ -69,8 +69,8 @@ async def test_lifespan_calls_user_lifespan():
 
 @pytest.mark.asyncio
 async def test_global_exception_handler():
-    config = FasterAPIConfig()
-    app = FasterAPI(config)
+    config = RealFastAPIConfig()
+    app = RealFastAPI(config)
 
     request = MagicMock(spec=Request)
     exc = ValueError("Something went wrong")

@@ -3,8 +3,8 @@ from typing import AsyncGenerator
 import pytest
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from fasterapi.database.base import Base
-from fasterapi.testing import override_get_db
+from realfastapi.database.base import Base
+from realfastapi.testing import override_get_db
 
 # Use in-memory SQLite for tests
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"

@@ -1,5 +1,5 @@
-from fasterapi.schemas.user import UserCreate, User
-from fasterapi.schemas.token import TokenPayload
+from realfastapi.schemas.user import UserCreate, User
+from realfastapi.schemas.token import TokenPayload
 
 
 def test_user_create_schema():

@@ -1,4 +1,4 @@
-# FasterAPI
+# RealFastAPI
 
 A production-ready wrapper application framework for FastAPI.
 
@@ -12,7 +12,7 @@ A production-ready wrapper application framework for FastAPI.
 ## Installation
 
 ```bash
-pip install fasterapi
+pip install realfastapi
 ```
 
 ## Quick Start
@@ -20,14 +20,14 @@ pip install fasterapi
 Create a new application:
 
 ```python
-from fasterapi.core import FasterAPI, FasterAPIConfig, DatabaseConfig
+from realfastapi.core import RealFastAPI, RealFastAPIConfig, DatabaseConfig
 
-config = FasterAPIConfig(
+config = RealFastAPIConfig(
     title="My App",
     db_config=DatabaseConfig(url="sqlite+aiosqlite:///:memory:")
 )
 
-app = FasterAPI(config)
+app = RealFastAPI(config)
 
 if __name__ == "__main__":
     import uvicorn
@@ -45,7 +45,7 @@ This example demonstrates:
 
 ## Generic CRUD
 
-FasterAPI provides a powerful `BaseCRUD` class and `create_crud_router` helper to automatically generate standard CRUD (Create, Read, Update, Delete) endpoints for your SQLAlchemy models.
+RealFastAPI provides a powerful `BaseCRUD` class and `create_crud_router` helper to automatically generate standard CRUD (Create, Read, Update, Delete) endpoints for your SQLAlchemy models.
 
 ### Usage
 
@@ -55,8 +55,8 @@ FasterAPI provides a powerful `BaseCRUD` class and `create_crud_router` helper t
 4. **Create Router**: Use `create_crud_router` to register routes.
 
 ```python
-from fasterapi.crud.base import BaseCRUD
-from fasterapi.crud.routes import create_crud_router
+from realfastapi.crud.base import BaseCRUD
+from realfastapi.crud.routes import create_crud_router
 
 # ... Define Item, ItemCreate, ItemUpdate, ItemOut ...
 
@@ -81,25 +81,25 @@ This automatically generates the following endpoints:
 
 ## Authentication
 
-FasterAPI includes a built-in JWT authentication system.
+RealFastAPI includes a built-in JWT authentication system.
 
 ### Usage
 
-1. **Configure Auth**: Set up `AuthConfig` in your `FasterAPIConfig`.
+1. **Configure Auth**: Set up `AuthConfig` in your `RealFastAPIConfig`.
 2. **Create Auth Router**: Use `create_auth_router` to generate login endpoints.
 3. **Protect Endpoints**: Use `app.get_current_user` dependency.
 
 ```python
-from fasterapi.auth.routes import create_auth_router
-from fasterapi.core import AuthConfig
+from realfastapi.auth.routes import create_auth_router
+from realfastapi.core import AuthConfig
 
 # 1. Config
 auth_config = AuthConfig(
     secret_key="YOUR_SECRET_KEY", 
     token_url="/auth/login"
 )
-config = FasterAPIConfig(..., auth_config=auth_config)
-app = FasterAPI(config)
+config = RealFastAPIConfig(..., auth_config=auth_config)
+app = RealFastAPI(config)
 
 # 2. Auth Router
 create_auth_router(
@@ -119,13 +119,13 @@ async def protected_route(user: str = Depends(app.get_current_user)):
 
 ## Database Migrations
 
-FasterAPI integrates with **Alembic** for database migrations.
+RealFastAPI integrates with **Alembic** for database migrations.
 
 ### Usage
 
 1. **Initialize**: Run the CLI command to scaffold migrations.
    ```bash
-   python -m fasterapi.cli init-db
+   python -m realfastapi.cli init-db
    ```
    This creates a `migrations` directory and `alembic.ini`.
 
@@ -148,15 +148,15 @@ FasterAPI integrates with **Alembic** for database migrations.
 
 ## Testing
 
-FasterAPI provides utilities to make testing easier, including `TestClient` and database overrides.
+RealFastAPI provides utilities to make testing easier, including `TestClient` and database overrides.
 
 ### Usage
 
-Use `fasterapi.testing.override_get_db` to create an isolated test database. The returned object exposes the `engine` for setup (like creating tables) and behaves as a dependency override.
+Use `realfastapi.testing.override_get_db` to create an isolated test database. The returned object exposes the `engine` for setup (like creating tables) and behaves as a dependency override.
 
 ```python
 import pytest
-from fasterapi.testing import TestClient, override_get_db
+from realfastapi.testing import TestClient, override_get_db
 from myapp.main import app
 from myapp.database import Base # Import your models
 

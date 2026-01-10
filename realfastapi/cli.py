@@ -168,7 +168,7 @@ def downgrade() -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="FasterAPI CLI")
+    parser = argparse.ArgumentParser(description="RealFastAPI CLI")
     subparsers = parser.add_subparsers(dest="command")
 
     init_parser = subparsers.add_parser("init-db", help="Initialize Alembic migrations")

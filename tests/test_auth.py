@@ -2,8 +2,8 @@ from datetime import timedelta
 
 import pytest
 
-from fasterapi.auth import security
-from fasterapi.auth.jwt import create_access_token, decode_access_token
+from realfastapi.auth import security
+from realfastapi.auth.jwt import create_access_token, decode_access_token
 
 
 def test_hash_password():
@@ -46,13 +46,13 @@ def test_jwt_expiration():
 
 @pytest.mark.asyncio
 async def test_get_current_user_valid_token():
-    from fasterapi.core import FasterAPI, FasterAPIConfig, AuthConfig
-    from fasterapi.schemas.token import TokenPayload
+    from realfastapi.core import RealFastAPI, RealFastAPIConfig, AuthConfig
+    from realfastapi.schemas.token import TokenPayload
 
     secret_key = "test_secret"
     auth_config = AuthConfig(secret_key=secret_key)
-    config = FasterAPIConfig(title="Test", auth_config=auth_config)
-    app = FasterAPI(config)
+    config = RealFastAPIConfig(title="Test", auth_config=auth_config)
+    app = RealFastAPI(config)
 
     email = "test@example.com"
     token = create_access_token(subject=email, secret_key=secret_key)
@@ -65,13 +65,13 @@ async def test_get_current_user_valid_token():
 
 @pytest.mark.asyncio
 async def test_get_current_user_invalid_token():
-    from fasterapi.core import FasterAPI, FasterAPIConfig, AuthConfig
+    from realfastapi.core import RealFastAPI, RealFastAPIConfig, AuthConfig
     from fastapi import HTTPException
 
     secret_key = "test_secret"
     auth_config = AuthConfig(secret_key=secret_key)
-    config = FasterAPIConfig(title="Test", auth_config=auth_config)
-    app = FasterAPI(config)
+    config = RealFastAPIConfig(title="Test", auth_config=auth_config)
+    app = RealFastAPI(config)
 
     with pytest.raises(HTTPException) as exc:
         await app.get_current_user(token="invalid_token")

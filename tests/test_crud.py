@@ -5,8 +5,8 @@ from pydantic import BaseModel
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from fasterapi.crud.base import BaseCRUD
-from fasterapi.database.base import Base
+from realfastapi.crud.base import BaseCRUD
+from realfastapi.database.base import Base
 
 
 # --- Test Models & Schemas ---

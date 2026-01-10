@@ -1,28 +1,28 @@
 from typing import Sequence
 from typing_extensions import TypeAlias
-from fasterapi.crud.base import (
+from realfastapi.crud.base import (
     ModelType,
     OutSchemaType,
     CreateSchemaType,
     UpdateSchemaType,
 )
-from fasterapi.database.session import Database
+from realfastapi.database.session import Database
 from enum import Enum
-from fasterapi.auth.security import get_password_hash
-from fasterapi.core import FasterAPI
+from realfastapi.auth.security import get_password_hash
+from realfastapi.core import RealFastAPI
 from typing import List, Optional, Any, Type
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import inspect
 
-from fasterapi.crud.base import BaseCRUD
+from realfastapi.crud.base import BaseCRUD
 
 
 def create_crud_router(
     crud: BaseCRUD,
     path: str,
-    app: FasterAPI,
+    app: RealFastAPI,
     password_field: Optional[str] = None,
     dependencies: Optional[List[Any]] = None,
     tags: Optional[List[str | Enum]] = None,
